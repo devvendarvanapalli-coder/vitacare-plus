@@ -1,0 +1,7 @@
+/* VitaCare Plus — Webfonts
+ * The Flutter app uses the `google_fonts` package to load Inter at runtime,
+ * so there are no font binaries in the source repo. Inter is loaded here from
+ * the Google Fonts CDN. To fully self-host, drop Inter .woff2 files into
+ * tokens/fonts/ and replace this @import with local @font-face rules. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');

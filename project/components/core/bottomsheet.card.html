@@ -1,0 +1,75 @@
+<!-- @dsCard group="Components" viewport="460x500" name="BottomSheet" subtitle="Modal overlay from bottom — drag handle · title · close · content" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--bg); padding: 24px; color: var(--text-primary); }
+  #preview { position: relative; width: 380px; height: 420px; border-radius: 20px; overflow: hidden; background: var(--bg); box-shadow: var(--shadow-pop); margin: 0 auto; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { BottomSheet, Button, Chip } = window.VitaCarePlusDesignSystem_da9342;
+    function Demo() {
+      const [open, setOpen] = React.useState(true);
+      const [spec, setSpec] = React.useState('Diabetologist');
+      const [type, setType] = React.useState('Video');
+      return (
+        <div id="preview">
+          {/* Background content */}
+          <div style={{ padding: 20 }}>
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 4 }}>Book Appointment</div>
+            <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Choose your specialist and visit type</div>
+            {!open && (
+              <Button variant="primary" style={{ marginTop: 16 }} onClick={() => setOpen(true)}>
+                Open Sheet
+              </Button>
+            )}
+          </div>
+          {/* Sheet renders inside the same container for the card preview */}
+          {open && (
+            <>
+              <div onClick={() => setOpen(false)} style={{ position: 'absolute', inset: 0, background: 'rgba(15,23,42,0.4)', zIndex: 10 }} />
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, background: 'var(--surface)', borderRadius: '20px 20px 0 0', zIndex: 11, padding: '0 0 24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px' }}>
+                  <div style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border)' }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '8px 20px 12px' }}>
+                  <span style={{ flex: 1, fontSize: 17, fontWeight: 700 }}>Book Appointment</span>
+                  <button onClick={() => setOpen(false)} style={{ appearance: 'none', background: 'rgba(15,23,42,0.06)', border: 'none', borderRadius: '50%', width: 30, height: 30, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="iconify" data-icon="material-symbols:close-rounded" style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
+                  </button>
+                </div>
+                <div style={{ padding: '0 20px' }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>SPECIALIST</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+                    {['Diabetologist','Cardiologist','Ophthalmologist'].map(s => (
+                      <Chip key={s} selected={spec===s} onClick={() => setSpec(s)}>{s}</Chip>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>VISIT TYPE</div>
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+                    {['Video','In-Clinic'].map(t => (
+                      <Chip key={t} selected={type===t} onClick={() => setType(t)}>{t}</Chip>
+                    ))}
+                  </div>
+                  <Button variant="primary" fullWidth>Confirm Booking</Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

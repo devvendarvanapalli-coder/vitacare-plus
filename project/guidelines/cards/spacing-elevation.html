@@ -1,0 +1,24 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Elevation & shadow" subtitle="Soft neutral card shadow; colored glows under gradient buttons" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--bg); padding: 28px; color: var(--text-primary); }
+  .row { display:flex; gap: 24px; align-items:center; }
+  .col { text-align:center; }
+  .box { width: 120px; height: 70px; border-radius: var(--r-card); background: var(--surface); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; }
+  .glow { color:#fff; }
+  .t { font-size: 10px; color: var(--text-secondary); margin-top:10px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="col"><div class="box" style="box-shadow:var(--shadow-card)">Card</div><div class="t">shadow-card<br>0 2px 12px /.06</div></div>
+    <div class="col"><div class="box" style="box-shadow:var(--shadow-pop)">Popover</div><div class="t">shadow-pop<br>0 4px 20px /.08</div></div>
+    <div class="col"><div class="box glow" style="background:var(--grad-primary);box-shadow:var(--shadow-primary)">Primary</div><div class="t">shadow-primary<br>blue 35% glow</div></div>
+    <div class="col"><div class="box glow" style="background:var(--grad-sos);box-shadow:var(--shadow-sos)">SOS</div><div class="t">shadow-sos<br>red 40% glow</div></div>
+  </div>
+</body>
+</html>

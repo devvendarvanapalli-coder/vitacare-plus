@@ -1,0 +1,21 @@
+<!-- @dsCard group="Type" viewport="700x170" name="Metric value & Labels" subtitle="Oversized tabular numbers for vitals; uppercase tracked micro-labels" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--surface); padding: 24px; color: var(--text-primary); display:flex; gap:48px; align-items:center; }
+  .metric { font-size: var(--fs-metric); font-weight: var(--fw-extra); letter-spacing: var(--ls-metric); line-height: 1; font-variant-numeric: tabular-nums; }
+  .unit { font-size: var(--fs-caption); font-weight: var(--fw-medium); color: var(--text-secondary); }
+  .label { font-size: var(--fs-label); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-label); color: var(--text-secondary); }
+  .micro { font-size: var(--fs-micro); font-weight: var(--fw-semibold); color: var(--text-secondary); }
+  .col .cap { font-size:11px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:var(--ls-label);margin-bottom:8px; }
+</style>
+</head>
+<body>
+  <div class="col"><div class="cap">Metric · 28 / 800</div><div class="metric">6.8<span class="unit"> %</span></div></div>
+  <div class="col"><div class="cap">Metric · 28 / 800</div><div class="metric">126<span class="unit"> mg/dL</span></div></div>
+  <div class="col"><div class="cap">Label · 11 / 600</div><div class="label">GOLD MEMBER</div><div style="height:8px"></div><div class="micro">Home · Modules · Appts</div></div>
+</body>
+</html>

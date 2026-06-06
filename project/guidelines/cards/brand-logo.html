@@ -1,0 +1,22 @@
+<!-- @dsCard group="Brand" viewport="700x190" name="Logo" subtitle="Heart + ECG pulse mark in a gradient rounded square; horizontal lockup" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--surface); padding: 24px; color: var(--text-primary); }
+  .row { display:flex; gap: 32px; align-items:center; }
+  .panel { flex:1; display:flex; align-items:center; justify-content:center; height:130px; border-radius: var(--r-card); border:1px solid var(--border); }
+  .onbrand { background: var(--grad-primary); }
+  .cap { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:var(--ls-label); margin-top:8px; text-align:center; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div style="text-align:center"><div class="panel"><img src="../../assets/logo-mark.svg" width="80" height="80"></div><div class="cap">Mark</div></div>
+    <div style="flex:1.4;text-align:center"><div class="panel"><img src="../../assets/logo-lockup.svg" width="220"></div><div class="cap">Horizontal lockup</div></div>
+    <div style="text-align:center"><div class="panel onbrand"><img src="../../assets/logo-mark.svg" width="64" height="64" style="filter:brightness(0) invert(1);opacity:.96"></div><div class="cap">On brand</div></div>
+  </div>
+</body>
+</html>

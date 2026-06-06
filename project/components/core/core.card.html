@@ -1,0 +1,87 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Core — Button, Card, Badge, Avatar, Chip" subtitle="Foundational primitives composed from the token system" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--bg); padding: 24px; color: var(--text-primary); }
+  .sec { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-label); color: var(--text-secondary); margin: 0 0 10px; }
+  .block { margin-bottom: 22px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { Button, Card, Badge, Avatar, Chip } = window.VitaCarePlusDesignSystem_da9342;
+    function Demo() {
+      const [spec, setSpec] = React.useState('Diabetologist');
+      return (
+        <div>
+          <div className="block">
+            <p className="sec">Buttons</p>
+            <div className="row">
+              <Button variant="primary" leadingIcon="login">Sign In</Button>
+              <Button variant="secondary">Book Now</Button>
+              <Button variant="danger" leadingIcon="sos">Call 108</Button>
+              <Button variant="outlined">Demo Login</Button>
+              <Button variant="ghost">Skip</Button>
+              <Button variant="primary" loading>Loading</Button>
+              <Button variant="primary" disabled>Disabled</Button>
+              <Button variant="primary" size="sm">Small</Button>
+            </div>
+          </div>
+
+          <div className="block">
+            <p className="sec">Cards</p>
+            <div className="row" style={{alignItems:'stretch'}}>
+              <Card style={{width:200}}>
+                <div style={{fontWeight:700,fontSize:14}}>Plain surface</div>
+                <div style={{fontSize:12,color:'var(--text-secondary)',marginTop:4}}>Soft neutral shadow, 16px radius</div>
+              </Card>
+              <Card gradient="primary" style={{width:200}}>
+                <div style={{fontSize:10,fontWeight:800,letterSpacing:1,opacity:.85}}>GOLD MEMBER</div>
+                <div style={{fontWeight:700,marginTop:4}}>Your plan is active</div>
+              </Card>
+              <Card gradient="gold" style={{width:170}} onClick={()=>{}}>
+                <div style={{fontWeight:700}}>Pressable</div>
+                <div style={{fontSize:12,opacity:.9,marginTop:4}}>Tap me — scales 0.98</div>
+              </Card>
+            </div>
+          </div>
+
+          <div className="block">
+            <p className="sec">Badges &amp; Avatars</p>
+            <div className="row">
+              <Badge status="success">Confirmed</Badge>
+              <Badge status="info">Video</Badge>
+              <Badge status="warning">Pending</Badge>
+              <Badge status="critical">Critical</Badge>
+              <Badge status="gold" dot={false}>Gold</Badge>
+              <Avatar initials="RK" />
+              <Avatar initials="PS" gradient="teal" />
+              <Avatar initials="A" shape="circle" gradient="gold" />
+            </div>
+          </div>
+
+          <div className="block" style={{marginBottom:0}}>
+            <p className="sec">Chips</p>
+            <div className="row">
+              {['Diabetologist','Cardiologist','Ophthalmologist'].map(s => (
+                <Chip key={s} selected={spec===s} onClick={()=>setSpec(s)}>{s}</Chip>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x180" name="Corner radii" subtitle="Buttons 12 · cards 16 · sheets & logo 20 · pills 999" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-sans); background: var(--surface); padding: 24px; color: var(--text-primary); }
+  .row { display:flex; gap: 16px; align-items:flex-end; }
+  .col { text-align:center; }
+  .box { width: 86px; height: 64px; background: var(--primary-surface); border: 1.5px solid var(--primary); }
+  .v { font-size: 11px; font-weight:700; margin-top:8px; }
+  .t { font-size: 10px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="col"><div class="box" style="border-radius:var(--r-sm)"></div><div class="v">8</div><div class="t">r-sm · chips</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--r-md)"></div><div class="v">10</div><div class="t">r-md · icon tiles</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--r-lg)"></div><div class="v">12</div><div class="t">r-lg · buttons</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--r-card)"></div><div class="v">16</div><div class="t">r-card · cards</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--r-2xl)"></div><div class="v">20</div><div class="t">r-2xl · sheets</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--r-pill);width:64px"></div><div class="v">999</div><div class="t">r-pill · badges</div></div>
+  </div>
+</body>
+</html>

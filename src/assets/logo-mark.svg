@@ -1,0 +1,28 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VitaCare Plus logo mark">
+  <defs>
+    <linearGradient id="vcFill" x1="12" y1="6" x2="84" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"></stop>
+      <stop offset="0.5" stop-color="#2563EB"></stop>
+      <stop offset="1" stop-color="#1D4ED8"></stop>
+    </linearGradient>
+    <linearGradient id="vcGloss" x1="20" y1="8" x2="48" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity="0.28"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="vcGold" x1="64" y1="60" x2="86" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBBF24"></stop>
+      <stop offset="1" stop-color="#D97706"></stop>
+    </linearGradient>
+  </defs>
+  
+  <rect width="96" height="96" rx="27" fill="url(#vcFill)"></rect>
+  <rect width="96" height="96" rx="27" fill="url(#vcGloss)"></rect>
+  <rect x="0.6" y="0.6" width="94.8" height="94.8" rx="26.4" fill="none" stroke="#fff" stroke-opacity="0.16"></rect>
+  
+  <path d="M46 70.5C37.6 63.2 23 53.6 23 39.6C23 31.8 28.7 26 36 26C40.6 26 44.1 28.4 46 31.7C47.9 28.4 51.4 26 56 26C63.3 26 69 31.8 69 39.6C69 45 66.8 49.6 63.8 53.6" fill="none" stroke="#fff" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"></path>
+  
+  <path d="M28 47.5H40.5L44 39L49.5 56L53 47.5H62" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"></path>
+  
+  <circle cx="74" cy="71" r="12" fill="url(#vcGold)" stroke="#fff" stroke-width="2.4"></circle>
+  <path d="M74 65.5V76.5M68.5 71H79.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"></path>
+</svg>

@@ -1,0 +1,39 @@
+/* VitaCare Plus — Spacing, radius, shadow, motion tokens
+ * Derived from the 4px grid and decorations across vitacare-app widgets. */
+
+:root {
+  /* ---- Spacing (4px grid) ---- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;   /* default screen gutter */
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+
+  /* ---- Radii ---- */
+  --r-sm:    8px;    /* chips, small tags */
+  --r-md:    10px;   /* icon tiles */
+  --r-lg:    12px;   /* buttons, inputs */
+  --r-xl:    14px;   /* module icon tiles, avatars */
+  --r-card:  16px;   /* cards */
+  --r-2xl:   20px;   /* logo mark, plan cards, sheets */
+  --r-pill:  999px;  /* badges, dots */
+
+  /* ---- Shadows ---- */
+  --shadow-card:    0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-pop:     0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-nav:     0 -4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 4px 12px rgba(37, 99, 235, 0.35);  /* primary button glow */
+  --shadow-sos:     0 4px 16px rgba(220, 38, 38, 0.40);  /* SOS glow */
+  --shadow-gold:    0 4px 16px rgba(245, 158, 11, 0.30);
+
+  /* ---- Motion ---- */
+  --dur-fast:   100ms;  /* @kind other */ /* button press */
+  --dur-base:   150ms;  /* @kind other */ /* card press */
+  --dur-medium: 200ms;  /* @kind other */ /* container transitions, nav */
+  --ease-std:   cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --press-scale-button: 0.97; /* @kind other */
+  --press-scale-card:   0.98; /* @kind other */
+}

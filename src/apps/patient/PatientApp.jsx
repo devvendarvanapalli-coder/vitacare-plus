@@ -5,13 +5,14 @@ import { Card } from '../../components/Card';
 import { Badge } from '../../components/Badge';
 import { Avatar } from '../../components/Avatar';
 import { LoginScreen } from './screens/LoginScreen';
-import { DashboardScreen, VC_MODULES } from './screens/DashboardScreen';
+import { DashboardScreen } from './screens/DashboardScreen';
 import { AppointmentsScreen } from './screens/AppointmentsScreen';
 import { MembershipScreen } from './screens/MembershipScreen';
 import { SosScreen } from './screens/SosScreen';
 import { HealthPassportScreen } from './screens/HealthPassportScreen';
 import { HealthReportScreen } from './screens/HealthReportScreen';
 import { CommunityScreen } from './screens/CommunityScreen';
+import { ModulesScreen } from './screens/ModulesScreen';
 
 function TopBar({ title, onBack }) {
   return (
@@ -36,26 +37,6 @@ function EmptyTab({ icon, title, sub }) {
   );
 }
 
-function ModulesTab({ onOpenReports }) {
-  return (
-    <div style={{ padding: '14px 20px 24px' }}>
-      <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: -0.3, marginBottom: 16 }}>Health Modules</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-        {VC_MODULES.map(([name, ico, color]) => (
-          <Card key={name} onClick={name === 'Reports' ? onOpenReports : () => {}} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 'var(--r-xl)', background: `color-mix(in srgb, ${color} 10%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon name={ico} size={22} color={color} />
-            </div>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700 }}>{name}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>Track &amp; manage</div>
-            </div>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function ProfileTab({ onOpenPassport, onOpenCommunity }) {
   return (
@@ -151,7 +132,7 @@ export function PatientApp() {
   else if (push === 'reports') { body = <HealthReportScreen />; topBar = <TopBar title="Health Reports" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'community') { body = <CommunityScreen />; topBar = <TopBar title="Community" onBack={() => setPush(null)} />; showNav = false; }
   else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} />;
-  else if (tab === 'modules') body = <ModulesTab onOpenReports={() => setPush('reports')} />;
+  else if (tab === 'modules') body = <ModulesScreen />;
   else if (tab === 'appts') body = <AppointmentsScreen />;
   else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} />;
 

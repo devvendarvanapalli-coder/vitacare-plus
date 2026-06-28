@@ -33,7 +33,7 @@ function Divider() {
   return <div style={{ height: 1, background: 'var(--border)', margin: '0 20px' }} />;
 }
 
-export function DashboardScreen({ onOpenMembership, onOpenAppointments }) {
+export function DashboardScreen({ onOpenMembership, onOpenAppointments, onOpenModules }) {
   const [activeMember, setActiveMember] = React.useState(0);
   const member = FAMILY_MEMBERS[activeMember];
   const m = member.metrics;
@@ -190,13 +190,13 @@ export function DashboardScreen({ onOpenMembership, onOpenAppointments }) {
 
       {/* Modules grid */}
       <div style={{ padding: '16px 20px 0' }}>
-        <SectionHeader title="Health Modules" action="All" />
+        <SectionHeader title="Health Modules" action="All" onAction={onOpenModules} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginTop: 14 }}>
           {VC_MODULES.map(([name, ico, color]) => (
-            <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: '10px 4px', borderRadius: 10, border: '1px solid var(--border)' }}>
+            <button key={name} onClick={onOpenModules} style={{ appearance: 'none', background: 'none', fontFamily: 'var(--font-sans)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: '10px 4px', borderRadius: 10, border: '1px solid var(--border)' }}>
               <Icon name={ico} size={20} color={color} />
               <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-secondary)', textAlign: 'center' }}>{name}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>

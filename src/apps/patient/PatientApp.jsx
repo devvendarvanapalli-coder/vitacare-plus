@@ -131,7 +131,7 @@ export function PatientApp() {
   else if (push === 'passport') { body = <HealthPassportScreen />; topBar = <TopBar title="Health Passport" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'reports') { body = <HealthReportScreen />; topBar = <TopBar title="Health Reports" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'community') { body = <CommunityScreen />; topBar = <TopBar title="Community" onBack={() => setPush(null)} />; showNav = false; }
-  else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} />;
+  else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} onOpenModules={() => setTab('modules')} />;
   else if (tab === 'modules') body = <ModulesScreen />;
   else if (tab === 'appts') body = <AppointmentsScreen />;
   else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} />;

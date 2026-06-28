@@ -141,7 +141,7 @@ const TOTAL = CATEGORIES.reduce((s, c) => s + c.conditions.length, 0);
 const DEFAULT_ENROLLED = new Set(['Type 2 Diabetes', 'Hypertension', 'Vitamin D Deficiency']);
 
 function CategoryRow({ cat, enrolled, onToggle, expanded, onExpand }) {
-  const activeCount = cat.conditions.filter(c => enrolled.has(c)).length;
+  const activeCount = cat.conditions.filter(c => enrolled.includes(c)).length;
 
   return (
     <div style={{ borderBottom: '1px solid var(--border)' }}>
@@ -171,7 +171,7 @@ function CategoryRow({ cat, enrolled, onToggle, expanded, onExpand }) {
       {expanded && (
         <div style={{ paddingBottom: 8 }}>
           {cat.conditions.map((condition, i) => {
-            const active = enrolled.has(condition);
+            const active = enrolled.includes(condition);
             return (
               <div key={condition} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '9px 20px 9px 66px', borderTop: i === 0 ? '1px solid var(--border)' : 'none' }}>
                 <div style={{ flex: 1 }}>
@@ -200,24 +200,20 @@ function CategoryRow({ cat, enrolled, onToggle, expanded, onExpand }) {
 }
 
 export function ModulesScreen() {
-  const [enrolled, setEnrolled] = React.useState(DEFAULT_ENROLLED);
-  const [expanded, setExpanded] = React.useState(new Set(['endocrine']));
+  const [enrolled, setEnrolled] = React.useState([...DEFAULT_ENROLLED]);
+  const [expanded, setExpanded] = React.useState(['endocrine']);
   const [query, setQuery] = React.useState('');
 
   const toggleEnroll = (condition) => {
-    setEnrolled(prev => {
-      const next = new Set(prev);
-      next.has(condition) ? next.delete(condition) : next.add(condition);
-      return next;
-    });
+    setEnrolled(prev =>
+      prev.includes(condition) ? prev.filter(c => c !== condition) : [...prev, condition]
+    );
   };
 
   const toggleExpand = (id) => {
-    setExpanded(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
+    setExpanded(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
   };
 
   // Filter by search query
@@ -228,7 +224,7 @@ export function ModulesScreen() {
       })).filter(cat => cat.conditions.length > 0 || cat.name.toLowerCase().includes(query.toLowerCase()))
     : CATEGORIES;
 
-  const activeList = [...enrolled];
+  const activeList = enrolled;
 
   return (
     <div style={{ paddingBottom: 32, background: '#fff' }}>
@@ -264,7 +260,7 @@ export function ModulesScreen() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, padding: '0 20px 14px' }}>
             {activeList.map(c => {
-              const cat = CATEGORIES.find(cat => cat.conditions.includes(c));
+              const cat = CATEGORIES.find(category => category.conditions.includes(c));
               return (
                 <span
                   key={c}
@@ -291,7 +287,7 @@ export function ModulesScreen() {
             {['Type 2 Diabetes', 'Hypertension', 'Obesity', 'Osteoarthritis', 'Vitamin D Deficiency', 'Chronic Kidney Disease', 'Asthma', 'COPD'].map(name => {
               const cat = CATEGORIES.find(c => c.conditions.includes(name) || name === 'COPD' && c.conditions.includes('Chronic Obstructive Pulmonary Disease'));
               const realName = name === 'COPD' ? 'Chronic Obstructive Pulmonary Disease' : name;
-              const active = enrolled.has(realName);
+              const active = enrolled.includes(realName);
               return (
                 <button
                   key={name}
@@ -315,7 +311,7 @@ export function ModulesScreen() {
             cat={cat}
             enrolled={enrolled}
             onToggle={toggleEnroll}
-            expanded={expanded.has(cat.id) || !!query}
+            expanded={expanded.includes(cat.id) || !!query}
             onExpand={() => toggleExpand(cat.id)}
           />
         ))}

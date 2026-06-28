@@ -1,0 +1,295 @@
+// VitaCare Plus — Prisma schema
+// Dev: SQLite (no setup needed)
+// Prod: switch provider to "postgresql" and update DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums (SQLite: stored as strings) ───────────────────────────────────────
+
+// Role
+// PATIENT | DOCTOR | ADMIN
+
+// MembershipTier
+// FREE | GOLD | PLATINUM
+
+// MetricType
+// HBAIC | BLOOD_SUGAR | BLOOD_PRESSURE | WEIGHT | HAEMOGLOBIN | VITAMIN_D | CHOLESTEROL | HEART_RATE | SPO2
+
+// AppointmentType
+// VIDEO | IN_PERSON | HOME_VISIT
+
+// AppointmentStatus
+// PENDING | CONFIRMED | COMPLETED | CANCELLED | NO_SHOW
+
+// MedLogStatus
+// TAKEN | MISSED | SKIPPED
+
+// ─── Core ────────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  name      String?
+  email     String?
+  role      String   @default("PATIENT")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient Patient?
+  doctor  Doctor?
+  otps    Otp[]
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ─── Patient ─────────────────────────────────────────────────────────────────
+
+model Patient {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bloodGroup       String?
+  dateOfBirth      DateTime?
+  gender           String?
+  membershipTier   String    @default("FREE")
+  membershipExpiry DateTime?
+  streakDays       Int       @default(0)
+  lastActivityAt   DateTime?
+  badgeCount       Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  conditions       PatientCondition[]
+  allergies        PatientAllergy[]
+  medications      Medication[]
+  metrics          HealthMetric[]
+  appointments     Appointment[]
+  reports          LabReport[]
+  emergencyContacts EmergencyContact[]
+  familyMembers    FamilyMember[]
+  communityPosts   CommunityPost[]
+  communityMembers CommunityMember[]
+  postLikes        PostLike[]
+}
+
+model PatientCondition {
+  id        String  @id @default(cuid())
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name      String
+}
+
+model PatientAllergy {
+  id        String  @id @default(cuid())
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name      String
+  severity  String  @default("MODERATE") // MILD | MODERATE | SEVERE
+}
+
+model EmergencyContact {
+  id        String  @id @default(cuid())
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name      String
+  phone     String
+  relation  String
+}
+
+model FamilyMember {
+  id         String   @id @default(cuid())
+  patientId  String
+  patient    Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name       String
+  relation   String
+  phone      String?
+  bloodGroup String?
+  dateOfBirth DateTime?
+  linkedPatientId String? // if they also have a VitaCare account
+}
+
+// ─── Doctor ──────────────────────────────────────────────────────────────────
+
+model Doctor {
+  id              String  @id @default(cuid())
+  userId          String  @unique
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialty       String?
+  licenseNo       String?
+  consultationFee Float   @default(500)
+  bio             String?
+  experienceYears Int     @default(0)
+  rating          Float   @default(0)
+  totalReviews    Int     @default(0)
+  verified        Boolean @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  appointments Appointment[]
+  schedules    DoctorSchedule[]
+}
+
+model DoctorSchedule {
+  id        String  @id @default(cuid())
+  doctorId  String
+  doctor    Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  dayOfWeek Int     // 0=Sun, 1=Mon, ..., 6=Sat
+  startTime String  // "09:00"
+  endTime   String  // "17:00"
+  slotMins  Int     @default(30)
+  active    Boolean @default(true)
+}
+
+// ─── Health Metrics ───────────────────────────────────────────────────────────
+
+model HealthMetric {
+  id         String   @id @default(cuid())
+  patientId  String
+  patient    Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  type       String   // MetricType enum values
+  value      String
+  unit       String?
+  notes      String?
+  recordedAt DateTime @default(now())
+}
+
+// ─── Medications ─────────────────────────────────────────────────────────────
+
+model Medication {
+  id          String    @id @default(cuid())
+  patientId   String
+  patient     Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name        String
+  dose        String
+  frequency   String    // "once_daily" | "twice_daily" | "thrice_daily" | "weekly"
+  timing      String?   // "morning" | "afternoon" | "evening" | "night"
+  withFood    Boolean   @default(false)
+  active      Boolean   @default(true)
+  prescribedBy String?
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+
+  logs MedicationLog[]
+}
+
+model MedicationLog {
+  id           String     @id @default(cuid())
+  medicationId String
+  medication   Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  status       String     @default("TAKEN") // TAKEN | MISSED | SKIPPED
+  takenAt      DateTime   @default(now())
+  notes        String?
+}
+
+// ─── Appointments ─────────────────────────────────────────────────────────────
+
+model Appointment {
+  id          String   @id @default(cuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId    String
+  doctor      Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  scheduledAt DateTime
+  durationMin Int      @default(30)
+  type        String   @default("VIDEO") // VIDEO | IN_PERSON | HOME_VISIT
+  status      String   @default("PENDING") // PENDING | CONFIRMED | COMPLETED | CANCELLED | NO_SHOW
+  symptoms    String?
+  notes       String?
+  videoLink   String?
+  fee         Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Lab Reports ─────────────────────────────────────────────────────────────
+
+model LabReport {
+  id         String   @id @default(cuid())
+  patientId  String
+  patient    Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  reportType String   // "CBC" | "HbA1c" | "Vitamin D" | etc.
+  fileUrl    String?
+  fileName   String?
+  aiSummary  String?
+  riskScore  Int      @default(0) // 0–10
+  markers    String?  // JSON string: [{name,value,unit,normal,status}]
+  reportDate DateTime?
+  uploadedAt DateTime @default(now())
+}
+
+// ─── Community ────────────────────────────────────────────────────────────────
+
+model CommunityGroup {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  icon        String?
+  color       String?
+  condition   String?
+  createdAt   DateTime @default(now())
+
+  posts   CommunityPost[]
+  members CommunityMember[]
+}
+
+model CommunityMember {
+  id        String         @id @default(cuid())
+  groupId   String
+  group     CommunityGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  patientId String
+  patient   Patient        @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  joinedAt  DateTime       @default(now())
+
+  @@unique([groupId, patientId])
+}
+
+model CommunityPost {
+  id        String         @id @default(cuid())
+  groupId   String
+  group     CommunityGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    Patient        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  comments CommunityComment[]
+  likes    PostLike[]
+}
+
+model CommunityComment {
+  id        String        @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  content   String
+  createdAt DateTime      @default(now())
+}
+
+model PostLike {
+  id        String        @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  patientId String
+  patient   Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+
+  @@unique([postId, patientId])
+}

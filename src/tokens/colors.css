@@ -1,20 +1,22 @@
-/* VitaCare Plus — Color tokens
- * Source of truth: lib/core/theme/app_colors.dart (vitacare-app)
- * Light is the primary brand surface; dark mirrors it under [data-theme="dark"]. */
+/* VitaCare Plus — Color tokens (Minimal AI edition)
+ * Pure white base, blue/teal accents, no decorative gradients on surfaces. */
 
 :root {
-  /* ---- Brand primitives (light) ---- */
-  --vc-blue-600: #2563EB;   /* primary */
-  --vc-blue-700: #1D4ED8;   /* primary gradient end */
-  --vc-blue-50:  #EFF6FF;   /* primary tint surface */
-  --vc-teal-600: #0D9488;   /* secondary */
-  --vc-teal-700: #0F766E;   /* teal gradient end */
+  /* ---- Brand primitives ---- */
+  --vc-blue-600: #2563EB;
+  --vc-blue-700: #1D4ED8;
+  --vc-blue-50:  #EFF6FF;
+  --vc-teal-600: #0D9488;
+  --vc-teal-700: #0F766E;
+  --vc-teal-50:  #F0FDFA;
 
-  /* ---- Neutrals (slate ramp) ---- */
+  /* ---- Neutrals ---- */
   --vc-slate-900: #0F172A;
+  --vc-slate-700: #334155;
   --vc-slate-500: #64748B;
   --vc-slate-400: #94A3B8;
   --vc-slate-200: #E2E8F0;
+  --vc-slate-100: #F1F5F9;
   --vc-slate-50:  #F8FAFC;
   --vc-white:     #FFFFFF;
 
@@ -32,61 +34,66 @@
   --vc-bp-orange:    #EA580C;
   --vc-pink:         #EC4899;
 
-  /* ---- SOS / Emergency ---- */
+  /* ---- SOS ---- */
   --vc-sos:      #DC2626;
   --vc-sos-dark: #991B1B;
 
-  /* ====== Semantic aliases (use these in components) ====== */
+  /* ====== Semantic aliases ====== */
   --primary:           var(--vc-blue-600);
   --primary-strong:    var(--vc-blue-700);
   --primary-surface:   var(--vc-blue-50);
   --on-primary:        #FFFFFF;
   --secondary:         var(--vc-teal-600);
+  --secondary-surface: var(--vc-teal-50);
 
-  --bg:                var(--vc-slate-50);
-  --surface:           var(--vc-white);
-  --card:              var(--vc-white);
+  /* Pure white base — minimal AI feel */
+  --bg:                #FFFFFF;
+  --surface:           #FFFFFF;
+  --surface-raised:    #FAFAFA;
+  --card:              #FFFFFF;
 
   --text-primary:      var(--vc-slate-900);
   --text-secondary:    var(--vc-slate-500);
   --text-hint:         var(--vc-slate-400);
-  --border:            var(--vc-slate-200);
+
+  /* Soft border — replaces heavy shadow on cards */
+  --border:            rgba(15, 23, 42, 0.08);
+  --border-focus:      var(--vc-blue-600);
 
   --success:           var(--vc-success);
   --warning:           var(--vc-warning);
   --error:             var(--vc-error);
   --gold:              var(--vc-gold);
 
-  /* ---- Gradients ---- */
-  --grad-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); /* @kind color */
-  --grad-teal:    linear-gradient(135deg, #0D9488 0%, #0F766E 100%); /* @kind color */
-  --grad-sos:     linear-gradient(135deg, #DC2626 0%, #991B1B 100%); /* @kind color */
-  --grad-gold:    linear-gradient(135deg, #F59E0B 0%, #D97706 100%); /* @kind color */
-  --grad-success: linear-gradient(135deg, #059669 0%, #047857 100%); /* @kind color */
-  --grad-platinum:linear-gradient(135deg, #818CF8 0%, #4F46E5 100%); /* @kind color */
-  --grad-silver:  linear-gradient(135deg, #94A3B8 0%, #64748B 100%); /* @kind color */
+  /* ---- Gradients (accent-only, not surface backgrounds) ---- */
+  --grad-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  --grad-teal:    linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+  --grad-sos:     linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  --grad-gold:    linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --grad-success: linear-gradient(135deg, #059669 0%, #047857 100%);
+  --grad-platinum:linear-gradient(135deg, #818CF8 0%, #4F46E5 100%);
+  --grad-silver:  linear-gradient(135deg, #94A3B8 0%, #64748B 100%);
 }
 
-/* ---- Dark theme (mirrors app_colors.dart dark set) ---- */
 [data-theme="dark"] {
   --primary:           #3B82F6;
   --primary-strong:    #2563EB;
-  --primary-surface:   #1E3A5F;
+  --primary-surface:   rgba(59, 130, 246, 0.12);
   --secondary:         #14B8A6;
+  --secondary-surface: rgba(20, 184, 166, 0.10);
 
-  --bg:                #050D1A;
-  --surface:           #0F1E35;
-  --card:              #0F1E35;
+  --bg:                #09090B;
+  --surface:           #111113;
+  --surface-raised:    #18181B;
+  --card:              #18181B;
 
-  --text-primary:      #F1F5F9;
-  --text-secondary:    #94A3B8;
-  --text-hint:         #475569;
-  --border:            rgba(59, 130, 246, 0.15);
+  --text-primary:      #FAFAFA;
+  --text-secondary:    #A1A1AA;
+  --text-hint:         #52525B;
+  --border:            rgba(255, 255, 255, 0.07);
 
   --success:           #10B981;
   --warning:           #F59E0B;
   --error:             #EF4444;
   --gold:              #F59E0B;
-
-  --grad-primary: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); /* @kind color */
 }

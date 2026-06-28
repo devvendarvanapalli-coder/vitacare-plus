@@ -18,26 +18,10 @@ export const VC_MODULES = [
 ];
 
 const VC_MEDS = [
-  ['Metformin 500mg', '1 tablet · 9:00 AM', true, 'medication'],
-  ['Glimepiride 2mg', '1 tablet · 8:00 AM', true, 'medication'],
-  ['Vitamin D3 60k', '1 capsule · 2:00 PM', false, 'medication_liquid'],
+  ['Metformin 500mg', '9:00 AM · With food', true],
+  ['Glimepiride 2mg', '8:00 AM · Before breakfast', true],
+  ['Vitamin D3 60k', '2:00 PM · Weekly', false],
 ];
-
-function AlertRow({ severity, title, message }) {
-  const color = severity === 'critical' ? 'var(--error)' : severity === 'warning' ? 'var(--warning)' : 'var(--primary)';
-  const ico = severity === 'critical' ? 'error' : severity === 'warning' ? 'warning' : 'info';
-  return (
-    <Card padding={14} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <div style={{ width: 36, height: 36, borderRadius: 'var(--r-md)', background: `color-mix(in srgb, ${color} 12%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-        <Icon name={ico} size={18} color={color} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 13, fontWeight: 700 }}>{title}</div>
-        <div style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: 2 }}>{message}</div>
-      </div>
-    </Card>
-  );
-}
 
 const FAMILY_MEMBERS = [
   { initials: 'RK', name: 'Rohan', relation: 'Me', metrics: { hba1c: '6.8', sugar: '126', weight: '74.5', bp: '128/82' } },
@@ -45,157 +29,173 @@ const FAMILY_MEMBERS = [
   { initials: 'AK', name: 'Arjun', relation: 'Son', metrics: { hba1c: '5.1', sugar: '88', weight: '58.0', bp: '112/70' } },
 ];
 
+function Divider() {
+  return <div style={{ height: 1, background: 'var(--border)', margin: '0 20px' }} />;
+}
+
 export function DashboardScreen({ onOpenMembership, onOpenAppointments }) {
   const [activeMember, setActiveMember] = React.useState(0);
   const member = FAMILY_MEMBERS[activeMember];
   const m = member.metrics;
 
   return (
-    <div style={{ paddingBottom: 24 }}>
+    <div style={{ paddingBottom: 32, background: '#fff' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 20px 4px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '16px 20px 12px' }}>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Good Morning</div>
-          <div style={{ fontSize: 18, fontWeight: 600 }}>{member.name}</div>
+          <div style={{ fontSize: 11, fontWeight: 500, color: 'var(--text-hint)', letterSpacing: 0.3, textTransform: 'uppercase' }}>Good morning</div>
+          <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: -0.4, color: 'var(--text-primary)', marginTop: 1 }}>{member.name}</div>
         </div>
-        <div style={{ width: 42, height: 42, borderRadius: 'var(--r-lg)', border: '1px solid var(--border)', background: 'var(--surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginRight: 10 }}>
-          <Icon name="notifications" size={20} color="var(--text-secondary)" />
-          <span style={{ position: 'absolute', top: 9, right: 9, width: 8, height: 8, borderRadius: '50%', background: 'var(--vc-sos)' }} />
-        </div>
-        <Avatar initials={member.initials} />
+        <button style={{ appearance: 'none', background: 'none', border: '1px solid var(--border)', borderRadius: 10, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative', marginRight: 10 }}>
+          <Icon name="notifications" size={18} color="var(--text-secondary)" />
+          <span style={{ position: 'absolute', top: 8, right: 8, width: 6, height: 6, borderRadius: '50%', background: '#EF4444', border: '1.5px solid #fff' }} />
+        </button>
+        <Avatar initials={member.initials} size={38} />
       </div>
 
       {/* Family switcher */}
-      <div style={{ display: 'flex', gap: 8, padding: '8px 20px 0', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <div style={{ display: 'flex', gap: 6, padding: '0 20px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {FAMILY_MEMBERS.map((fm, i) => (
           <button
             key={fm.initials}
             onClick={() => setActiveMember(i)}
-            style={{ appearance: 'none', border: `1.5px solid ${activeMember === i ? 'var(--primary)' : 'var(--border)'}`, borderRadius: 'var(--r-pill)', padding: '5px 12px', background: activeMember === i ? 'color-mix(in srgb, var(--primary) 10%, transparent)' : 'var(--surface)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, flexShrink: 0 }}
+            style={{
+              appearance: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px 5px 6px',
+              borderRadius: 999, border: `1px solid ${activeMember === i ? 'var(--primary)' : 'var(--border)'}`,
+              background: activeMember === i ? 'var(--primary-surface)' : '#fff',
+              cursor: 'pointer',
+            }}
           >
-            <Avatar initials={fm.initials} size={22} />
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: activeMember === i ? 'var(--primary)' : 'var(--text-primary)' }}>{fm.name}</div>
-              <div style={{ fontSize: 10, color: 'var(--text-secondary)' }}>{fm.relation}</div>
-            </div>
+            <Avatar initials={fm.initials} size={20} />
+            <span style={{ fontSize: 12, fontWeight: 500, color: activeMember === i ? 'var(--primary)' : 'var(--text-secondary)' }}>{fm.name}</span>
           </button>
         ))}
-        <button style={{ appearance: 'none', border: '1.5px dashed var(--border)', borderRadius: 'var(--r-pill)', padding: '5px 14px', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-          <Icon name="person_add" size={16} color="var(--text-secondary)" />
-          <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>Add</span>
+        <button style={{ appearance: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 999, border: '1px dashed var(--border)', background: 'transparent', cursor: 'pointer' }}>
+          <Icon name="add" size={13} color="var(--text-hint)" />
+          <span style={{ fontSize: 12, color: 'var(--text-hint)' }}>Add</span>
         </button>
       </div>
 
-      {/* Streak + Gamification */}
-      <div style={{ padding: '12px 20px 0' }}>
-        <Card gradient="teal" padding={16} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ position: 'relative' }}>
-            <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: 26 }}>🔥</span>
-            </div>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: -0.5 }}>12 Day Streak!</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.78)', marginTop: 2 }}>Log today to keep your streak alive</div>
-            <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
-              {[1,2,3,4,5,6,7].map(d => (
-                <div key={d} style={{ flex: 1, height: 5, borderRadius: 3, background: d <= 5 ? '#fff' : 'rgba(255,255,255,0.3)' }} />
-              ))}
-            </div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 4 }}>
-              <Icon name="workspace_premium" size={20} fill={1} color="#F59E0B" />
-            </div>
-            <div style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>3 badges</div>
-          </div>
-        </Card>
+      <Divider />
+
+      {/* Streak — minimal inline strip */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 20px' }}>
+        <span style={{ fontSize: 18 }}>🔥</span>
+        <div style={{ flex: 1 }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>12-day streak</span>
+          <span style={{ fontSize: 12, color: 'var(--text-hint)', marginLeft: 8 }}>Log today to keep it going</span>
+        </div>
+        <div style={{ display: 'flex', gap: 3 }}>
+          {[...Array(7)].map((_, i) => (
+            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: i < 5 ? 'var(--primary)' : 'var(--border)' }} />
+          ))}
+        </div>
+        <span style={{ fontSize: 11, color: 'var(--text-hint)', padding: '3px 8px', borderRadius: 999, border: '1px solid var(--border)' }}>🥇 3 badges</span>
       </div>
 
-      <div style={{ padding: '8px 20px 0' }}>
-        {/* Membership banner */}
-        <Card gradient="primary" onClick={onOpenMembership} style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Icon name="workspace_premium" size={16} fill={1} color="#F59E0B" />
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, color: '#F59E0B' }}>GOLD MEMBER</span>
-            </div>
-            <div style={{ fontSize: 14, fontWeight: 700, marginTop: 4 }}>Your plan is active</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)' }}>Valid till Dec 31, 2025</div>
-          </div>
-          <Icon name="chevron_right" size={20} color="rgba(255,255,255,0.7)" />
-        </Card>
-      </div>
+      <Divider />
+
+      {/* Membership banner — minimal */}
+      <button
+        onClick={onOpenMembership}
+        style={{ appearance: 'none', display: 'flex', alignItems: 'center', width: '100%', padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: 10 }}
+      >
+        <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Icon name="workspace_premium" size={16} fill={1} color="#F59E0B" />
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Free Plan · Upgrade to Gold</div>
+          <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 1 }}>₹299/yr — AI insights, teleconsultation & more</div>
+        </div>
+        <Icon name="chevron_right" size={18} color="var(--text-hint)" />
+      </button>
+
+      <Divider />
 
       {/* Health overview */}
-      <div style={{ padding: '20px 20px 0' }}>
-        <SectionHeader title="Health Overview" action="See All" />
+      <div style={{ padding: '16px 20px 0' }}>
+        <SectionHeader title="Health Overview" action="History" />
       </div>
-      <div style={{ display: 'flex', gap: 12, overflowX: 'auto', padding: '12px 20px', scrollbarWidth: 'none' }}>
-        <MetricCard label="HbA1c" value={m.hba1c} unit="%" icon="water_drop" iconColor="var(--vc-hba1c-teal)" delta={-3.2} deltaLabel="from last month" />
+      <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '10px 20px', scrollbarWidth: 'none' }}>
+        <MetricCard label="HbA1c" value={m.hba1c} unit="%" icon="water_drop" iconColor="var(--vc-hba1c-teal)" delta={-3.2} deltaLabel="vs last month" />
         <MetricCard label="Blood Sugar" value={m.sugar} unit="mg/dL" icon="monitor_heart" iconColor="var(--vc-glucose-blue)" delta={1.4} deltaLabel="fasting" />
         <MetricCard label="Weight" value={m.weight} unit="kg" icon="monitor_weight" iconColor="var(--vc-weight-purple)" />
-        <MetricCard label="Blood Pressure" value={m.bp} unit="mmHg" icon="favorite" iconColor="var(--vc-bp-orange)" />
+        <MetricCard label="BP" value={m.bp} unit="mmHg" icon="favorite" iconColor="var(--vc-bp-orange)" />
       </div>
 
-      {/* Alerts */}
-      <div style={{ padding: '8px 20px 0' }}>
-        <SectionHeader title="Active Alerts" action="Dismiss all" />
-        <div style={{ marginTop: 12 }}>
-          <AlertRow severity="warning" title="Fasting sugar trending up" message="Your last 3 readings are above target. Consider logging your meals." />
+      <Divider />
+
+      {/* Alert — inline, no heavy card */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 20px' }}>
+        <div style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(217,119,6,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+          <Icon name="warning" size={14} color="#D97706" />
         </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Fasting sugar trending up</div>
+          <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2, lineHeight: 1.5 }}>Last 3 readings above target. Log meals to identify triggers.</div>
+        </div>
+        <button style={{ appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
+          <Icon name="close" size={15} color="var(--text-hint)" />
+        </button>
       </div>
+
+      <Divider />
 
       {/* Upcoming appointment */}
-      <div style={{ padding: '20px 20px 0' }}>
-        <SectionHeader title="Upcoming Appointment" action="View all" onAction={onOpenAppointments} />
-        <Card onClick={onOpenAppointments} style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ width: 50, height: 50, borderRadius: 'var(--r-xl)', background: 'var(--grad-teal)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Icon name="videocam" size={22} color="#fff" />
+      <div style={{ padding: '16px 20px 0' }}>
+        <SectionHeader title="Upcoming" action="View all" onAction={onOpenAppointments} />
+        <button
+          onClick={onOpenAppointments}
+          style={{ appearance: 'none', background: 'none', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', marginTop: 10, display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', width: '100%', textAlign: 'left', fontFamily: 'var(--font-sans)' }}
+        >
+          <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--secondary-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Icon name="videocam" size={18} color="var(--secondary)" />
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>Dr. Priya Sharma</div>
-            <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Diabetologist</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 6 }}>
-              <Icon name="calendar_today" size={12} color="var(--text-secondary)" />
-              <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--primary)' }}>Tomorrow</span>
-              <Icon name="schedule" size={12} color="var(--text-secondary)" style={{ marginLeft: 8 }} />
-              <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>10:00 AM</span>
+            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Dr. Priya Sharma</div>
+            <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>Diabetologist</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 6 }}>
+              <Icon name="calendar_today" size={11} color="var(--text-hint)" />
+              <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>Tomorrow · 10:00 AM</span>
+              <span style={{ padding: '2px 7px', borderRadius: 999, background: 'var(--secondary-surface)', color: 'var(--secondary)', fontSize: 10, fontWeight: 600 }}>Video</span>
             </div>
           </div>
-          <Badge status="info">Video</Badge>
-        </Card>
+          <Icon name="chevron_right" size={16} color="var(--text-hint)" />
+        </button>
       </div>
 
+      <Divider style={{ marginTop: 16 }} />
+
       {/* Medications */}
-      <div style={{ padding: '20px 20px 0' }}>
+      <div style={{ padding: '16px 20px 0' }}>
         <SectionHeader title="Today's Medications" action="Manage" />
-        <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {VC_MEDS.map(([name, sub, taken, ico]) => (
-            <Card key={name} padding={0} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 'var(--r-md)', background: `color-mix(in srgb, ${taken ? 'var(--success)' : 'var(--warning)'} 10%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Icon name={ico} size={18} color={taken ? 'var(--success)' : 'var(--warning)'} />
+        <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column' }}>
+          {VC_MEDS.map(([name, sub, taken], i) => (
+            <div key={name}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0' }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: taken ? 'var(--success)' : 'var(--border)', flexShrink: 0 }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{name}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-hint)', marginTop: 1 }}>{sub}</div>
+                </div>
+                <span style={{ fontSize: 11, fontWeight: 500, color: taken ? 'var(--success)' : 'var(--warning)' }}>{taken ? 'Taken' : 'Pending'}</span>
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: 600 }}>{name}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>{sub}</div>
-              </div>
-              <span style={{ fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 'var(--r-sm)', color: taken ? 'var(--success)' : 'var(--warning)', background: `color-mix(in srgb, ${taken ? 'var(--success)' : 'var(--warning)'} 10%, transparent)` }}>{taken ? 'Taken' : 'Pending'}</span>
-            </Card>
+              {i < VC_MEDS.length - 1 && <div style={{ height: 1, background: 'var(--border)' }} />}
+            </div>
           ))}
         </div>
       </div>
 
+      <Divider style={{ marginTop: 16 }} />
+
       {/* Modules grid */}
-      <div style={{ padding: '20px 20px 0' }}>
+      <div style={{ padding: '16px 20px 0' }}>
         <SectionHeader title="Health Modules" action="All" />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginTop: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginTop: 14 }}>
           {VC_MODULES.map(([name, ico, color]) => (
-            <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
-              <div style={{ width: 52, height: 52, borderRadius: 'var(--r-xl)', background: `color-mix(in srgb, ${color} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${color} 30%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Icon name={ico} size={22} color={color} />
-              </div>
-              <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>{name}</span>
+            <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: '10px 4px', borderRadius: 10, border: '1px solid var(--border)' }}>
+              <Icon name={ico} size={20} color={color} />
+              <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-secondary)', textAlign: 'center' }}>{name}</span>
             </div>
           ))}
         </div>

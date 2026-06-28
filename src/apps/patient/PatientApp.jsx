@@ -15,11 +15,11 @@ import { CommunityScreen } from './screens/CommunityScreen';
 
 function TopBar({ title, onBack }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', borderBottom: '1px solid var(--border)', background: 'var(--bg)' }}>
-      <button onClick={onBack} style={{ appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex' }}>
-        <Icon name="arrow_back" size={22} color="var(--text-primary)" />
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px', height: 48, borderBottom: '1px solid var(--border)', background: '#fff' }}>
+      <button onClick={onBack} style={{ appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', color: 'var(--text-primary)' }}>
+        <Icon name="arrow_back" size={20} color="var(--text-primary)" />
       </button>
-      <span style={{ fontSize: 18, fontWeight: 700 }}>{title}</span>
+      <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: -0.2 }}>{title}</span>
     </div>
   );
 }
@@ -107,22 +107,21 @@ function ProfileTab({ onOpenPassport, onOpenCommunity }) {
 function BottomNav({ tab, onTab, onSos }) {
   const items = [['home', 'Home', 'home'], ['grid_view', 'Modules', 'modules'], null, ['calendar_today', 'Appts', 'appts'], ['person', 'Profile', 'profile']];
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', height: 72, paddingBottom: 4, background: 'var(--surface)', borderTop: '1px solid var(--border)', boxShadow: 'var(--shadow-nav)', position: 'relative' }}>
+    <div style={{ display: 'flex', alignItems: 'center', height: 60, background: '#fff', borderTop: '1px solid var(--border)' }}>
       {items.map((it, i) => {
         if (!it) {
           return (
-            <div key="sos" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 6 }}>
-              <button onClick={onSos} style={{ width: 52, height: 52, borderRadius: '50%', border: 'none', cursor: 'pointer', background: 'var(--grad-sos)', boxShadow: 'var(--shadow-sos)', color: '#fff', fontSize: 12, fontWeight: 800, letterSpacing: 0.5 }}>SOS</button>
-              <span style={{ fontSize: 9, fontWeight: 600, color: 'var(--vc-sos)', marginTop: 3 }}>Emergency</span>
+            <div key="sos" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+              <button onClick={onSos} style={{ width: 40, height: 40, borderRadius: '50%', border: 'none', cursor: 'pointer', background: '#DC2626', color: '#fff', fontSize: 11, fontWeight: 700, letterSpacing: 0.3 }}>SOS</button>
             </div>
           );
         }
         const [ico, lbl, id] = it;
         const active = tab === id;
         return (
-          <button key={id} onClick={() => onTab(id)} style={{ flex: 1, appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingTop: 12 }}>
-            <Icon name={ico} size={22} fill={active ? 1 : 0} color={active ? 'var(--primary)' : 'var(--text-secondary)'} />
-            <span style={{ fontSize: 10, fontWeight: active ? 700 : 500, color: active ? 'var(--primary)' : 'var(--text-secondary)' }}>{lbl}</span>
+          <button key={id} onClick={() => onTab(id)} style={{ flex: 1, appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: '8px 0' }}>
+            <Icon name={ico} size={20} fill={active ? 1 : 0} color={active ? 'var(--primary)' : 'var(--text-hint)'} />
+            <span style={{ fontSize: 10, fontWeight: active ? 600 : 400, color: active ? 'var(--primary)' : 'var(--text-hint)' }}>{lbl}</span>
           </button>
         );
       })}
@@ -137,7 +136,7 @@ export function PatientApp() {
 
   if (!authed) {
     return (
-      <div style={{ minHeight: '100vh', background: '#E7EBF0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
+      <div style={{ minHeight: '100vh', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
         <IOSDevice>
           <LoginScreen onLogin={() => setAuthed(true)} />
         </IOSDevice>
@@ -157,14 +156,14 @@ export function PatientApp() {
   else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} />;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#E7EBF0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ minHeight: '100vh', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
       <IOSDevice>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
           <div style={{ height: 50, flexShrink: 0 }} />
           {topBar}
-          <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>{body}</div>
+          <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: '#fff' }}>{body}</div>
           {showNav && <BottomNav tab={tab} onTab={setTab} onSos={() => setPush('sos')} />}
-          <div style={{ height: 20, flexShrink: 0, background: showNav ? 'var(--surface)' : 'var(--bg)' }} />
+          <div style={{ height: 20, flexShrink: 0, background: '#fff' }} />
         </div>
       </IOSDevice>
     </div>

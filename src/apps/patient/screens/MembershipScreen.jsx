@@ -3,9 +3,9 @@ import { Icon } from '../../../components/Icon';
 import { Card } from '../../../components/Card';
 
 const VC_PLANS = [
-  { id: 'silver', name: 'Silver', price: '₹499/mo', grad: 'var(--grad-silver)', accent: '#64748B', features: ['Basic health tracking', 'Blood sugar logging', 'Monthly reports', 'Email support', 'Up to 3 health modules'] },
-  { id: 'gold', name: 'Gold', price: '₹999/mo', grad: 'var(--grad-gold)', accent: '#D97706', best: true, features: ['All Silver features', 'AI health insights', 'Teleconsultation (2/month)', 'Priority support', 'Complication risk tracking', 'All health modules', 'Family member tracking'] },
-  { id: 'platinum', name: 'Platinum', price: '₹1999/mo', grad: 'var(--grad-platinum)', accent: '#4F46E5', features: ['All Gold features', 'Unlimited teleconsultation', 'Home health visits (2/month)', 'Dedicated care manager', 'Emergency SOS priority', 'Lab test discounts (30%)', 'Specialist access'] },
+  { id: 'free', name: 'Free', price: '₹0', subLabel: 'Forever free', grad: 'linear-gradient(135deg, #64748B 0%, #475569 100%)', accent: '#64748B', features: ['Basic health tracking', 'Blood sugar logging', 'SOS Emergency button', 'Health Passport (QR)', 'Up to 2 health modules'] },
+  { id: 'gold', name: 'Gold', price: '₹299', subLabel: 'per year', grad: 'var(--grad-gold)', accent: '#D97706', best: true, features: ['All Free features', 'AI-powered health insights', 'Teleconsultation (2/month)', 'Priority support', 'Complication risk tracking', 'All health modules', 'Family member tracking (3)', 'Health Report Analysis'] },
+  { id: 'platinum', name: 'Platinum', price: '₹999', subLabel: 'per year', grad: 'var(--grad-platinum)', accent: '#4F46E5', features: ['All Gold features', 'Unlimited teleconsultation', 'Home health visits (2/month)', 'Dedicated care manager', 'SOS priority dispatch', 'Lab test discounts (30%)', 'Family tracking (unlimited)', 'Specialist access'] },
 ];
 
 function PlanCard({ p, current, onUpgrade }) {
@@ -19,6 +19,7 @@ function PlanCard({ p, current, onUpgrade }) {
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontSize: 18, fontWeight: 800, color: '#fff' }}>{p.price}</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)' }}>{p.subLabel}</div>
           {isCurrent && <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, color: '#fff', background: 'rgba(255,255,255,0.2)', borderRadius: 6, padding: '3px 8px', marginTop: 4 }}>Current</span>}
         </div>
       </div>
@@ -38,7 +39,7 @@ function PlanCard({ p, current, onUpgrade }) {
 }
 
 export function MembershipScreen() {
-  const [current, setCurrent] = React.useState('gold');
+  const [current, setCurrent] = React.useState('free');
   return (
     <div style={{ padding: '14px 20px 28px' }}>
       <Card gradient="primary" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -50,8 +51,8 @@ export function MembershipScreen() {
         </div>
       </Card>
 
-      <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: -0.3, marginTop: 24 }}>Upgrade Your Plan</div>
-      <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>All plans include 7-day free trial</div>
+      <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: -0.3, marginTop: 24 }}>Choose Your Plan</div>
+      <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>Gold & Platinum billed annually · Cancel anytime</div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 20 }}>
         {VC_PLANS.map((p) => <PlanCard key={p.id} p={p} current={current} onUpgrade={() => setCurrent(p.id)} />)}
@@ -59,7 +60,7 @@ export function MembershipScreen() {
 
       <Card style={{ marginTop: 24 }}>
         <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12 }}>Frequently Asked</div>
-        {[['Can I cancel anytime?', 'Yes, cancel anytime. No cancellation fee.'], ['Is GST included?', 'All prices are inclusive of 18% GST.'], ['Can I switch plans?', 'Upgrade or downgrade anytime. Prorated billing.']].map(([q, a]) => (
+        {[['Can I cancel anytime?', 'Yes, cancel anytime. No cancellation fee.'], ['Is GST included?', 'All prices are inclusive of 18% GST.'], ['Can I switch plans?', 'Upgrade or downgrade anytime. Prorated billing.'], ['How is ₹299/yr so affordable?', 'VitaCare Plus is committed to accessible healthcare. Gold is subsidised for Indian patients managing chronic conditions.']].map(([q, a]) => (
           <div key={q} style={{ marginBottom: 12 }}>
             <div style={{ fontSize: 13, fontWeight: 700 }}>{q}</div>
             <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{a}</div>

@@ -16,16 +16,29 @@ function MedRow({ name, dose, allergy }) {
 export function SosScreen() {
   const [triggered, setTriggered] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
+  const [gpsShared, setGpsShared] = React.useState(false);
+  const [familyAlerted, setFamilyAlerted] = React.useState(false);
 
   const fire = () => {
     setConfirm(false); setTriggered(true);
+    setGpsShared(true); setFamilyAlerted(true);
     setTimeout(() => setTriggered(false), 3500);
   };
 
   return (
     <div style={{ minHeight: '100%', position: 'relative', padding: '8px 24px 28px' }}>
+      {/* Quick medical ID strip */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, padding: '10px 14px', borderRadius: 'var(--r-lg)', background: 'color-mix(in srgb, var(--error) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--error) 20%, transparent)' }}>
+        <Icon name="bloodtype" size={18} fill={1} color="var(--error)" />
+        <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--error)' }}>O+ Blood</span>
+        <span style={{ width: 1, height: 16, background: 'color-mix(in srgb, var(--error) 30%, transparent)' }} />
+        <Icon name="warning" size={16} color="var(--warning)" />
+        <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--warning)' }}>Allergic: Penicillin</span>
+        <span style={{ marginLeft: 'auto', fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)' }}>Medical ID</span>
+      </div>
+
       {triggered && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, padding: 12, borderRadius: 'var(--r-lg)', background: 'color-mix(in srgb, var(--vc-sos) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--vc-sos) 30%, transparent)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8, padding: 12, borderRadius: 'var(--r-lg)', background: 'color-mix(in srgb, var(--vc-sos) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--vc-sos) 30%, transparent)' }}>
           <Icon name="wifi_calling_3" size={18} color="var(--vc-sos)" />
           <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--vc-sos)' }}>SOS ACTIVE — Help is on the way</span>
         </div>
@@ -43,12 +56,17 @@ export function SosScreen() {
       <div style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-secondary)' }}>Tap for Emergency</div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 32 }}>
-        {[['Call Doctor', 'medical_services', 'var(--primary)'], ['Share GPS', 'location_on', 'var(--secondary)'], ['Alert Family', 'family_restroom', 'var(--warning)'], ['Nearest Hospital', 'local_hospital', 'var(--success)']].map(([lbl, ico, c]) => (
-          <div key={lbl} style={{ background: `color-mix(in srgb, ${c} 8%, transparent)`, border: `1px solid color-mix(in srgb, ${c} 20%, transparent)`, borderRadius: 'var(--r-card)', padding: '16px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+        {[
+          ['Call Doctor', 'medical_services', 'var(--primary)', false, null],
+          ['Share GPS', 'location_on', 'var(--secondary)', gpsShared, () => setGpsShared(g => !g)],
+          ['Alert Family', 'family_restroom', 'var(--warning)', familyAlerted, () => setFamilyAlerted(f => !f)],
+          ['Nearest Hospital', 'local_hospital', 'var(--success)', false, null],
+        ].map(([lbl, ico, c, active, onClick]) => (
+          <div key={lbl} onClick={onClick} style={{ background: active ? `color-mix(in srgb, ${c} 16%, transparent)` : `color-mix(in srgb, ${c} 8%, transparent)`, border: `${active ? 2 : 1}px solid color-mix(in srgb, ${c} ${active ? 40 : 20}%, transparent)`, borderRadius: 'var(--r-card)', padding: '16px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, cursor: 'pointer', transition: 'all .2s' }}>
             <div style={{ width: 48, height: 48, borderRadius: '50%', background: `color-mix(in srgb, ${c} 15%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon name={ico} size={22} color={c} />
+              <Icon name={active ? 'check_circle' : ico} size={22} color={c} fill={active ? 1 : 0} />
             </div>
-            <span style={{ fontSize: 12, fontWeight: 700 }}>{lbl}</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: active ? c : 'var(--text-primary)' }}>{active ? (lbl === 'Share GPS' ? 'GPS Shared' : 'Alerted') : lbl}</span>
           </div>
         ))}
       </div>

@@ -9,6 +9,9 @@ import { DashboardScreen, VC_MODULES } from './screens/DashboardScreen';
 import { AppointmentsScreen } from './screens/AppointmentsScreen';
 import { MembershipScreen } from './screens/MembershipScreen';
 import { SosScreen } from './screens/SosScreen';
+import { HealthPassportScreen } from './screens/HealthPassportScreen';
+import { HealthReportScreen } from './screens/HealthReportScreen';
+import { CommunityScreen } from './screens/CommunityScreen';
 
 function TopBar({ title, onBack }) {
   return (
@@ -33,13 +36,13 @@ function EmptyTab({ icon, title, sub }) {
   );
 }
 
-function ModulesTab() {
+function ModulesTab({ onOpenReports }) {
   return (
     <div style={{ padding: '14px 20px 24px' }}>
       <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: -0.3, marginBottom: 16 }}>Health Modules</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
         {VC_MODULES.map(([name, ico, color]) => (
-          <Card key={name} onClick={() => {}} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Card key={name} onClick={name === 'Reports' ? onOpenReports : () => {}} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ width: 44, height: 44, borderRadius: 'var(--r-xl)', background: `color-mix(in srgb, ${color} 10%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={ico} size={22} color={color} />
             </div>
@@ -54,7 +57,7 @@ function ModulesTab() {
   );
 }
 
-function ProfileTab() {
+function ProfileTab({ onOpenPassport, onOpenCommunity }) {
   return (
     <div style={{ padding: '20px 20px 24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -62,14 +65,37 @@ function ProfileTab() {
         <div>
           <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: -0.3 }}>Rohan Kapoor</div>
           <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>+91 99999 99999</div>
-          <div style={{ marginTop: 6 }}><Badge status="gold" dot={false}>Gold Member</Badge></div>
+          <div style={{ marginTop: 6 }}><Badge status="gold" dot={false}>Free Plan</Badge></div>
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 20 }}>
-        {[['person', 'Personal Details'], ['favorite', 'Health Profile'], ['description', 'My Reports'], ['credit_card', 'Billing & Payments'], ['notifications', 'Notifications'], ['settings', 'Settings'], ['logout', 'Sign Out']].map(([ico, lbl]) => (
-          <Card key={lbl} onClick={() => {}} padding={0} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px' }}>
-            <Icon name={ico} size={20} color="var(--text-secondary)" />
-            <span style={{ flex: 1, fontSize: 14, fontWeight: 500 }}>{lbl}</span>
+
+      {/* Streak summary */}
+      <div style={{ marginTop: 14, padding: '12px 14px', borderRadius: 'var(--r-lg)', background: 'color-mix(in srgb, var(--secondary) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span style={{ fontSize: 24 }}>🔥</span>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 700 }}>12 Day Streak</div>
+          <div style={{ fontSize: 11, color: 'var(--text-secondary)' }}>3 badges earned · Keep going!</div>
+        </div>
+        <div style={{ display: 'flex', gap: 4 }}>
+          {['🥇', '💊', '📊'].map(b => <span key={b} style={{ fontSize: 18 }}>{b}</span>)}
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 16 }}>
+        {[
+          ['person', 'Personal Details', null],
+          ['favorite', 'Health Profile', null],
+          ['qr_code', 'Health Passport', onOpenPassport],
+          ['description', 'My Reports', null],
+          ['groups', 'Community', onOpenCommunity],
+          ['credit_card', 'Billing & Payments', null],
+          ['notifications', 'Notifications', null],
+          ['settings', 'Settings', null],
+          ['logout', 'Sign Out', null],
+        ].map(([ico, lbl, handler]) => (
+          <Card key={lbl} onClick={handler || (() => {})} padding={0} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px' }}>
+            <Icon name={ico} size={20} color={handler ? 'var(--primary)' : 'var(--text-secondary)'} />
+            <span style={{ flex: 1, fontSize: 14, fontWeight: handler ? 600 : 500, color: handler ? 'var(--text-primary)' : 'var(--text-primary)' }}>{lbl}</span>
             <Icon name="chevron_right" size={20} color="var(--text-hint)" />
           </Card>
         ))}
@@ -107,7 +133,7 @@ function BottomNav({ tab, onTab, onSos }) {
 export function PatientApp() {
   const [authed, setAuthed] = React.useState(false);
   const [tab, setTab] = React.useState('home');
-  const [push, setPush] = React.useState(null); // 'membership' | 'sos'
+  const [push, setPush] = React.useState(null); // 'membership' | 'sos' | 'passport' | 'reports' | 'community'
 
   if (!authed) {
     return (
@@ -122,10 +148,13 @@ export function PatientApp() {
   let body, topBar = null, showNav = true;
   if (push === 'membership') { body = <MembershipScreen />; topBar = <TopBar title="Membership Plans" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'sos') { body = <SosScreen />; topBar = <TopBar title="Emergency SOS" onBack={() => setPush(null)} />; showNav = false; }
+  else if (push === 'passport') { body = <HealthPassportScreen />; topBar = <TopBar title="Health Passport" onBack={() => setPush(null)} />; showNav = false; }
+  else if (push === 'reports') { body = <HealthReportScreen />; topBar = <TopBar title="Health Reports" onBack={() => setPush(null)} />; showNav = false; }
+  else if (push === 'community') { body = <CommunityScreen />; topBar = <TopBar title="Community" onBack={() => setPush(null)} />; showNav = false; }
   else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} />;
-  else if (tab === 'modules') body = <ModulesTab />;
+  else if (tab === 'modules') body = <ModulesTab onOpenReports={() => setPush('reports')} />;
   else if (tab === 'appts') body = <AppointmentsScreen />;
-  else if (tab === 'profile') body = <ProfileTab />;
+  else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} />;
 
   return (
     <div style={{ minHeight: '100vh', background: '#E7EBF0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>

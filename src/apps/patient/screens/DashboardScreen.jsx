@@ -33,7 +33,7 @@ function Divider() {
   return <div style={{ height: 1, background: 'var(--border)', margin: '0 20px' }} />;
 }
 
-export function DashboardScreen({ onOpenMembership, onOpenAppointments, onOpenModules }) {
+export function DashboardScreen({ onOpenMembership, onOpenAppointments, onOpenModules, onOpenReports }) {
   const [activeMember, setActiveMember] = React.useState(0);
   const member = FAMILY_MEMBERS[activeMember];
   const m = member.metrics;
@@ -193,7 +193,7 @@ export function DashboardScreen({ onOpenMembership, onOpenAppointments, onOpenMo
         <SectionHeader title="Health Modules" action="All" onAction={onOpenModules} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginTop: 14 }}>
           {VC_MODULES.map(([name, emoji, color]) => (
-            <button key={name} onClick={onOpenModules} style={{ appearance: 'none', background: 'none', fontFamily: 'var(--font-sans)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: '10px 4px', borderRadius: 10, border: '1px solid var(--border)' }}>
+            <button key={name} onClick={name === 'Reports' ? onOpenReports : onOpenModules} style={{ appearance: 'none', background: 'none', fontFamily: 'var(--font-sans)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: '10px 4px', borderRadius: 10, border: '1px solid var(--border)' }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: `color-mix(in srgb, ${color} 10%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontSize: 18, lineHeight: 1 }}>{emoji}</span>
               </div>

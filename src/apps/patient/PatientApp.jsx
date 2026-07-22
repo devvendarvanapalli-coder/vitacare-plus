@@ -13,6 +13,7 @@ import { HealthPassportScreen } from './screens/HealthPassportScreen';
 import { HealthReportScreen } from './screens/HealthReportScreen';
 import { CommunityScreen } from './screens/CommunityScreen';
 import { ModulesScreen } from './screens/ModulesScreen';
+import { MetricTrendsScreen } from './screens/MetricTrendsScreen';
 
 function TopBar({ title, onBack }) {
   return (
@@ -38,7 +39,7 @@ function EmptyTab({ icon, title, sub }) {
 }
 
 
-function ProfileTab({ onOpenPassport, onOpenCommunity }) {
+function ProfileTab({ onOpenPassport, onOpenCommunity, onOpenReports }) {
   return (
     <div style={{ padding: '20px 20px 24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -67,7 +68,7 @@ function ProfileTab({ onOpenPassport, onOpenCommunity }) {
           ['person', 'Personal Details', null],
           ['favorite', 'Health Profile', null],
           ['qr_code', 'Health Passport', onOpenPassport],
-          ['description', 'My Reports', null],
+          ['description', 'My Reports', onOpenReports],
           ['groups', 'Community', onOpenCommunity],
           ['credit_card', 'Billing & Payments', null],
           ['notifications', 'Notifications', null],
@@ -113,7 +114,7 @@ function BottomNav({ tab, onTab, onSos }) {
 export function PatientApp() {
   const [authed, setAuthed] = React.useState(false);
   const [tab, setTab] = React.useState('home');
-  const [push, setPush] = React.useState(null); // 'membership' | 'sos' | 'passport' | 'reports' | 'community'
+  const [push, setPush] = React.useState(null); // 'membership' | 'sos' | 'passport' | 'reports' | 'community' | 'trends'
 
   if (!authed) {
     return (
@@ -129,12 +130,13 @@ export function PatientApp() {
   if (push === 'membership') { body = <MembershipScreen />; topBar = <TopBar title="Membership Plans" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'sos') { body = <SosScreen />; topBar = <TopBar title="Emergency SOS" onBack={() => setPush(null)} />; showNav = false; }
   else if (push === 'passport') { body = <HealthPassportScreen />; topBar = <TopBar title="Health Passport" onBack={() => setPush(null)} />; showNav = false; }
-  else if (push === 'reports') { body = <HealthReportScreen />; topBar = <TopBar title="Health Reports" onBack={() => setPush(null)} />; showNav = false; }
+  else if (push === 'reports') { body = <HealthReportScreen onViewTrends={() => setPush('trends')} />; topBar = <TopBar title="Health Reports" onBack={() => setPush(null)} />; showNav = false; }
+  else if (push === 'trends') { body = <MetricTrendsScreen />; topBar = <TopBar title="Metric Trends" onBack={() => setPush('reports')} />; showNav = false; }
   else if (push === 'community') { body = <CommunityScreen />; topBar = <TopBar title="Community" onBack={() => setPush(null)} />; showNav = false; }
-  else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} onOpenModules={() => setTab('modules')} />;
+  else if (tab === 'home') body = <DashboardScreen onOpenMembership={() => setPush('membership')} onOpenAppointments={() => setTab('appts')} onOpenModules={() => setTab('modules')} onOpenReports={() => setPush('reports')} />;
   else if (tab === 'modules') body = <ModulesScreen />;
   else if (tab === 'appts') body = <AppointmentsScreen />;
-  else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} />;
+  else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} onOpenReports={() => setPush('reports')} />;
 
   return (
     <div style={{ minHeight: '100vh', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>

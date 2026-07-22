@@ -118,7 +118,7 @@ function ReportCard({ report, onExpand }) {
   );
 }
 
-export function HealthReportScreen() {
+export function HealthReportScreen({ onViewTrends }) {
   const [uploading, setUploading] = React.useState(false);
   const [selectedType, setSelectedType] = React.useState('');
   const [processing, setProcessing] = React.useState(false);
@@ -194,6 +194,23 @@ export function HealthReportScreen() {
           AI analysis explains your report in simple language and flags values outside normal ranges.
         </span>
       </div>
+
+      {/* View Trends CTA */}
+      {onViewTrends && (
+        <div
+          onClick={onViewTrends}
+          style={{ margin: '14px 20px 0', padding: '14px 16px', borderRadius: 'var(--r-xl)', background: 'linear-gradient(135deg, #2563EB 0%, #0D9488 100%)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}
+        >
+          <div style={{ width: 40, height: 40, borderRadius: 'var(--r-lg)', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Icon name="show_chart" size={22} color="#fff" />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>View Metric Trends</div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)', marginTop: 2 }}>See how your health has improved over time</div>
+          </div>
+          <Icon name="chevron_right" size={20} color="rgba(255,255,255,0.8)" />
+        </div>
+      )}
 
       {/* Past reports */}
       <div style={{ padding: '20px 20px 0' }}>

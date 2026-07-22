@@ -13,7 +13,7 @@ const GRADS = {
 export function Card({ children, gradient, padding = 16, radius, onClick, style = {} }) {
   const [p, setP] = React.useState(false);
   const press = typeof onClick === 'function';
-  const r = radius ?? (gradient ? 14 : 12);
+  const r = radius ?? (gradient ? 16 : 16);
 
   return (
     <div

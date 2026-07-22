@@ -1,40 +1,34 @@
-/* VitaCare Plus — Typography tokens
- * Source of truth: lib/core/theme/app_text_styles.dart (vitacare-app)
- * Single typeface: Inter. Tight negative tracking on large display sizes,
- * generous 1.6 line-height on body, uppercase tracked labels. */
+/* VitaCare Plus — Typography tokens */
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* ---- Font sizes (px, as used in the app) ---- */
-  --fs-display:  32px;  /* screen titles, "Welcome back" */
-  --fs-headline: 24px;  /* section heroes */
-  --fs-metric:   28px;  /* big metric numbers */
-  --fs-title:    18px;  /* card / section titles */
-  --fs-button:   15px;  /* button label */
-  --fs-body:     14px;  /* default body */
-  --fs-caption:  12px;  /* secondary / meta */
-  --fs-label:    11px;  /* uppercase tracked labels */
-  --fs-micro:    10px;  /* nav labels, badge meta */
+  --fs-display:  32px;
+  --fs-headline: 24px;
+  --fs-metric:   28px;
+  --fs-title:    18px;
+  --fs-button:   15px;
+  --fs-body:     14px;
+  --fs-caption:  12px;
+  --fs-label:    11px;
+  --fs-micro:    10px;
 
-  /* ---- Weights ---- */
-  --fw-regular:  400; /* @kind font */
-  --fw-medium:   500; /* @kind font */
-  --fw-semibold: 600; /* @kind font */
-  --fw-bold:     700; /* @kind font */
-  --fw-extra:    800; /* @kind font */
-  --fw-black:    900; /* @kind font */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extra:    800;
+  --fw-black:    900;
 
-  /* ---- Line heights ---- */
-  --lh-tight:    1.2; /* @kind font */
-  --lh-snug:     1.3; /* @kind font */
-  --lh-title:    1.4; /* @kind font */
-  --lh-body:     1.6; /* @kind font */
+  --lh-tight:    1.2;
+  --lh-snug:     1.3;
+  --lh-title:    1.4;
+  --lh-body:     1.6;
 
-  /* ---- Letter spacing ---- */
-  --ls-display:  -0.5px; /* @kind font */
-  --ls-headline: -0.3px; /* @kind font */
-  --ls-metric:   -1px; /* @kind font */
-  --ls-label:    0.8px;   /* uppercase labels @kind font */
-  --ls-button:   0.1px; /* @kind font */
+  --ls-display:  -0.5px;
+  --ls-headline: -0.3px;
+  --ls-metric:   -1px;
+  --ls-label:    0.8px;
+  --ls-button:   0.1px;
 }

@@ -48,7 +48,7 @@ function QRCode() {
     [1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,0,1],
   ];
   return (
-    <div style={{ display: 'inline-block', padding: 10, background: '#fff', borderRadius: 10 }}>
+    <div style={{ display: 'inline-block', padding: 10, background: 'var(--card)', borderRadius: 10 }}>
       {pattern.map((row, r) => (
         <div key={r} style={{ display: 'flex' }}>
           {row.map((cell, c) => (

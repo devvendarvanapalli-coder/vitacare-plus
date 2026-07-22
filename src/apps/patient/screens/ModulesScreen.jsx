@@ -242,7 +242,7 @@ export function ModulesScreen() {
   const activeList = enrolled;
 
   return (
-    <div style={{ paddingBottom: 32, background: '#fff' }}>
+    <div style={{ paddingBottom: 32, background: 'var(--bg)' }}>
       {/* Header */}
       <div style={{ padding: '16px 20px 12px' }}>
         <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: -0.4, color: 'var(--text-primary)' }}>Health Modules</div>

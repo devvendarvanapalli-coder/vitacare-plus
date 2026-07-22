@@ -1,99 +1,65 @@
-/* VitaCare Plus — Color tokens (Minimal AI edition)
- * Pure white base, blue/teal accents, no decorative gradients on surfaces. */
+/* VitaCare Plus — Dark-first color tokens (Material 3 dark scheme) */
 
 :root {
-  /* ---- Brand primitives ---- */
-  --vc-blue-600: #2563EB;
-  --vc-blue-700: #1D4ED8;
-  --vc-blue-50:  #EFF6FF;
-  --vc-teal-600: #0D9488;
-  --vc-teal-700: #0F766E;
-  --vc-teal-50:  #F0FDFA;
+  /* ---- Surface layers (Material 3 elevation) ---- */
+  --bg:              #131313;   /* background / surface-dim */
+  --surface:         #131313;   /* surface */
+  --card:            #1c1b1b;   /* surface-container-low */
+  --surface-raised:  #201f1f;   /* surface-container */
+  --surface-high:    #2a2a2a;   /* surface-container-high */
+  --surface-highest: #353534;   /* surface-container-highest */
+  --surface-bright:  #393939;   /* surface-bright */
 
-  /* ---- Neutrals ---- */
-  --vc-slate-900: #0F172A;
-  --vc-slate-700: #334155;
-  --vc-slate-500: #64748B;
-  --vc-slate-400: #94A3B8;
-  --vc-slate-200: #E2E8F0;
-  --vc-slate-100: #F1F5F9;
-  --vc-slate-50:  #F8FAFC;
-  --vc-white:     #FFFFFF;
+  /* ---- Primary = white (dark scheme) ---- */
+  --primary:           #ffffff;
+  --primary-strong:    #e5e2e1;
+  --primary-surface:   rgba(255, 255, 255, 0.08);
+  --on-primary:        #2f3131;
+
+  /* ---- Secondary = mid-grey ---- */
+  --secondary:         #c6c6c6;
+  --secondary-surface: rgba(198, 198, 198, 0.10);
+
+  /* ---- Text ---- */
+  --text-primary:    #e5e2e1;   /* on-surface */
+  --text-secondary:  #c4c7c8;  /* on-surface-variant */
+  --text-hint:       #8e9192;  /* outline */
+
+  /* ---- Borders ---- */
+  --border:          rgba(68, 71, 72, 0.7);  /* outline-variant */
+  --border-focus:    #ffffff;
 
   /* ---- Semantic status ---- */
-  --vc-success: #059669;
-  --vc-warning: #D97706;
-  --vc-error:   #DC2626;
-  --vc-gold:    #D97706;
+  --success:  #4ade80;
+  --warning:  #fbbf24;
+  --error:    #f87171;
+  --gold:     #fbbf24;
 
-  /* ---- Health metric accents ---- */
-  --vc-heart-rate:   #EF4444;
-  --vc-glucose-blue: #2563EB;
-  --vc-hba1c-teal:   #0D9488;
-  --vc-weight-purple:#7C3AED;
-  --vc-bp-orange:    #EA580C;
-  --vc-pink:         #EC4899;
+  /* ---- Health metric accents (lighter for dark bg) ---- */
+  --vc-heart-rate:    #f87171;
+  --vc-glucose-blue:  #60a5fa;
+  --vc-hba1c-teal:    #2dd4bf;
+  --vc-weight-purple: #a78bfa;
+  --vc-bp-orange:     #fb923c;
+  --vc-pink:          #f472b6;
+  --vc-success-green: #4ade80;
+
+  /* ---- Module accent primitives ---- */
+  --vc-blue-600:  #3b82f6;
+  --vc-blue-50:   rgba(59, 130, 246, 0.12);
+  --vc-teal-600:  #14b8a6;
+  --vc-teal-50:   rgba(20, 184, 166, 0.10);
 
   /* ---- SOS ---- */
-  --vc-sos:      #DC2626;
-  --vc-sos-dark: #991B1B;
+  --vc-sos:      #ef4444;
+  --vc-sos-dark: #dc2626;
 
-  /* ====== Semantic aliases ====== */
-  --primary:           var(--vc-blue-600);
-  --primary-strong:    var(--vc-blue-700);
-  --primary-surface:   var(--vc-blue-50);
-  --on-primary:        #FFFFFF;
-  --secondary:         var(--vc-teal-600);
-  --secondary-surface: var(--vc-teal-50);
-
-  /* Pure white base — minimal AI feel */
-  --bg:                #FFFFFF;
-  --surface:           #FFFFFF;
-  --surface-raised:    #FAFAFA;
-  --card:              #FFFFFF;
-
-  --text-primary:      var(--vc-slate-900);
-  --text-secondary:    var(--vc-slate-500);
-  --text-hint:         var(--vc-slate-400);
-
-  /* Soft border — replaces heavy shadow on cards */
-  --border:            rgba(15, 23, 42, 0.08);
-  --border-focus:      var(--vc-blue-600);
-
-  --success:           var(--vc-success);
-  --warning:           var(--vc-warning);
-  --error:             var(--vc-error);
-  --gold:              var(--vc-gold);
-
-  /* ---- Gradients (accent-only, not surface backgrounds) ---- */
-  --grad-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-  --grad-teal:    linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
-  --grad-sos:     linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
-  --grad-gold:    linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  --grad-success: linear-gradient(135deg, #059669 0%, #047857 100%);
-  --grad-platinum:linear-gradient(135deg, #818CF8 0%, #4F46E5 100%);
-  --grad-silver:  linear-gradient(135deg, #94A3B8 0%, #64748B 100%);
-}
-
-[data-theme="dark"] {
-  --primary:           #3B82F6;
-  --primary-strong:    #2563EB;
-  --primary-surface:   rgba(59, 130, 246, 0.12);
-  --secondary:         #14B8A6;
-  --secondary-surface: rgba(20, 184, 166, 0.10);
-
-  --bg:                #09090B;
-  --surface:           #111113;
-  --surface-raised:    #18181B;
-  --card:              #18181B;
-
-  --text-primary:      #FAFAFA;
-  --text-secondary:    #A1A1AA;
-  --text-hint:         #52525B;
-  --border:            rgba(255, 255, 255, 0.07);
-
-  --success:           #10B981;
-  --warning:           #F59E0B;
-  --error:             #EF4444;
-  --gold:              #F59E0B;
+  /* ---- Gradients ---- */
+  --grad-primary:  linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --grad-teal:     linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  --grad-sos:      linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --grad-gold:     linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  --grad-success:  linear-gradient(135deg, #4ade80 0%, #059669 100%);
+  --grad-platinum: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+  --grad-silver:   linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
 }

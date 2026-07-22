@@ -90,7 +90,7 @@ function getStatus(value, m) {
 }
 
 function statusColor(status) {
-  return { normal: '#0D9488', borderline: '#F59E0B', high: '#EF4444', low: '#3B82F6' }[status] || '#94A3B8';
+  return { normal: '#4ade80', borderline: '#fbbf24', high: '#f87171', low: '#60a5fa' }[status] || '#8e9192';
 }
 
 function statusLabel(status) {
@@ -150,9 +150,9 @@ function LineChart({ data, metricKey, metric, color }) {
       {yTicks.map((t, i) => (
         <g key={i}>
           <line x1={padL} y1={t.y} x2={padL + cW} y2={t.y}
-            stroke="rgba(0,0,0,0.06)" strokeWidth={1} />
+            stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
           <text x={padL - 4} y={t.y + 3.5} textAnchor="end"
-            fontSize={9} fill="#94A3B8">{t.label}</text>
+            fontSize={9} fill="#8e9192">{t.label}</text>
         </g>
       ))}
 
@@ -173,7 +173,7 @@ function LineChart({ data, metricKey, metric, color }) {
           <g key={i}>
             {isLast && <circle cx={p[0]} cy={p[1]} r={9} fill={`${color}20`} />}
             <circle cx={p[0]} cy={p[1]} r={isLast ? 5 : 3.5}
-              fill={isLast ? dc : '#fff'}
+              fill={isLast ? dc : '#1c1b1b'}
               stroke={isLast ? dc : color}
               strokeWidth={2} />
           </g>
@@ -183,7 +183,7 @@ function LineChart({ data, metricKey, metric, color }) {
       {/* X axis labels */}
       {data.map((d, i) => (
         <text key={i} x={xS(i)} y={H - 4} textAnchor="middle"
-          fontSize={9} fill="#94A3B8">{d.label}</text>
+          fontSize={9} fill="#8e9192">{d.label}</text>
       ))}
 
       {/* Latest value label */}
@@ -211,16 +211,16 @@ function MetricCard({ metricDef, data, moduleColor }) {
 
   return (
     <div style={{
-      background: '#fff', borderRadius: 14, padding: '14px 16px',
-      border: `1px solid ${status !== 'normal' ? sc + '40' : '#E2E8F0'}`,
+      background: 'var(--card)', borderRadius: 16, padding: '14px 16px',
+      border: `1px solid ${status !== 'normal' ? sc + '40' : 'var(--border)'}`,
       marginBottom: 12,
       boxShadow: status !== 'normal' ? `0 0 0 3px ${sc}10` : 'none',
     }}>
       {/* Header row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>{metricDef.name}</div>
-          <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{metricDef.name}</div>
+          <div style={{ fontSize: 11, color: 'var(--text-hint)', marginTop: 1 }}>
             Normal: {metricDef.normalMin}–{metricDef.normalMax} {metricDef.unit}
           </div>
         </div>
@@ -235,7 +235,7 @@ function MetricCard({ metricDef, data, moduleColor }) {
               {statusLabel(status)}
             </span>
             {diff != null && (
-              <span style={{ fontSize: 11, fontWeight: 600, color: trend === '↓' ? '#0D9488' : trend === '↑' ? '#EF4444' : '#94A3B8' }}>
+              <span style={{ fontSize: 11, fontWeight: 600, color: trend === '↓' ? 'var(--success)' : trend === '↑' ? 'var(--error)' : 'var(--text-hint)' }}>
                 {trend} {Math.abs(diff)}
               </span>
             )}
@@ -247,7 +247,7 @@ function MetricCard({ metricDef, data, moduleColor }) {
       <LineChart data={data} metricKey={metricDef.key} metric={metricDef} color={moduleColor} />
 
       {/* Bottom: report count */}
-      <div style={{ marginTop: 8, fontSize: 11, color: '#94A3B8', textAlign: 'right' }}>
+      <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-hint)', textAlign: 'right' }}>
         Based on {data.filter(d => d[metricDef.key] != null).length} reports
       </div>
     </div>
@@ -259,17 +259,17 @@ export function MetricTrendsScreen() {
   const mod = MODULES.find(m => m.id === activeModule);
 
   return (
-    <div style={{ paddingBottom: 32, background: '#F8FAFC', minHeight: '100%' }}>
+    <div style={{ paddingBottom: 32, background: 'var(--bg)', minHeight: '100%' }}>
       {/* Header */}
-      <div style={{ background: '#fff', padding: '16px 20px 12px', borderBottom: '1px solid #E2E8F0' }}>
-        <div style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', letterSpacing: -0.4 }}>Health Trends</div>
-        <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+      <div style={{ background: 'var(--bg)', padding: '16px 20px 12px', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: -0.4 }}>Health Trends</div>
+        <div style={{ fontSize: 12, color: 'var(--text-hint)', marginTop: 2 }}>
           Tracking {REPORT_HISTORY.length} reports · Jan–Jul 2025
         </div>
       </div>
 
       {/* Module selector */}
-      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '12px 20px', scrollbarWidth: 'none', background: '#fff', borderBottom: '1px solid #E2E8F0' }}>
+      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '12px 20px', scrollbarWidth: 'none', background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
         {MODULES.map(m => {
           const active = m.id === activeModule;
           return (
@@ -280,9 +280,9 @@ export function MetricTrendsScreen() {
                 appearance: 'none', flexShrink: 0, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 6,
                 padding: '7px 14px', borderRadius: 99, fontFamily: 'var(--font-sans)',
-                border: `1.5px solid ${active ? m.color : '#E2E8F0'}`,
-                background: active ? m.color : '#fff',
-                color: active ? '#fff' : '#64748B',
+                border: `1.5px solid ${active ? m.color : 'var(--border)'}`,
+                background: active ? m.color : 'var(--surface-highest)',
+                color: active ? '#fff' : 'var(--text-secondary)',
                 fontSize: 12, fontWeight: 600, transition: 'all 0.15s',
               }}
             >
@@ -294,7 +294,7 @@ export function MetricTrendsScreen() {
       </div>
 
       {/* Summary strip */}
-      <div style={{ padding: '12px 20px', background: '#fff', marginBottom: 8, borderBottom: '1px solid #E2E8F0' }}>
+      <div style={{ padding: '12px 20px', background: 'var(--bg)', marginBottom: 8, borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', gap: 16 }}>
           {mod.metrics.slice(0, 2).map(metric => {
             const first = REPORT_HISTORY[0][metric.key];
@@ -302,16 +302,16 @@ export function MetricTrendsScreen() {
             const improved = metric.warnMax ? last < first : last > first;
             const pct = Math.abs(((last - first) / first) * 100).toFixed(1);
             return (
-              <div key={metric.key} style={{ flex: 1, padding: '10px 12px', borderRadius: 10,
-                background: improved ? '#F0FDF9' : '#FEF9EC',
-                border: `1px solid ${improved ? '#0D948830' : '#F59E0B30'}` }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              <div key={metric.key} style={{ flex: 1, padding: '10px 12px', borderRadius: 12,
+                background: improved ? 'rgba(74,222,128,0.08)' : 'rgba(251,191,36,0.08)',
+                border: `1px solid ${improved ? 'rgba(74,222,128,0.25)' : 'rgba(251,191,36,0.25)'}` }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-hint)', textTransform: 'uppercase', letterSpacing: 0.5 }}>
                   {metric.name}
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: improved ? '#0D9488' : '#F59E0B', marginTop: 2 }}>
+                <div style={{ fontSize: 16, fontWeight: 800, color: improved ? 'var(--success)' : 'var(--warning)', marginTop: 2 }}>
                   {improved ? '↓' : '↑'} {pct}%
                 </div>
-                <div style={{ fontSize: 10, color: '#94A3B8', marginTop: 1 }}>since Jan 2025</div>
+                <div style={{ fontSize: 10, color: 'var(--text-hint)', marginTop: 1 }}>since Jan 2025</div>
               </div>
             );
           })}
@@ -332,19 +332,19 @@ export function MetricTrendsScreen() {
 
       {/* Report list */}
       <div style={{ padding: '8px 16px 0' }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8, paddingLeft: 4 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-hint)', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8, paddingLeft: 4 }}>
           Reports Used
         </div>
         {REPORT_HISTORY.map((r, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
-            background: '#fff', borderRadius: 10, marginBottom: 6, border: '1px solid #E2E8F0' }}>
+            background: 'var(--card)', borderRadius: 12, marginBottom: 6, border: '1px solid var(--border)' }}>
             <div style={{ width: 32, height: 32, borderRadius: 8, background: `${mod.color}15`,
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
               {mod.emoji}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#0F172A' }}>{r.lab}</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>{r.date}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{r.lab}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-hint)' }}>{r.date}</div>
             </div>
             <div style={{ fontSize: 11, fontWeight: 600, color: mod.color,
               background: `${mod.color}12`, padding: '3px 8px', borderRadius: 99 }}>

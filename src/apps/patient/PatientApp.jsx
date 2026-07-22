@@ -17,11 +17,11 @@ import { MetricTrendsScreen } from './screens/MetricTrendsScreen';
 
 function TopBar({ title, onBack }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px', height: 48, borderBottom: '1px solid var(--border)', background: '#fff' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px', height: 48, borderBottom: '1px solid var(--border)', background: 'rgba(19,19,19,0.85)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
       <button onClick={onBack} style={{ appearance: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', color: 'var(--text-primary)' }}>
         <Icon name="arrow_back" size={20} color="var(--text-primary)" />
       </button>
-      <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: -0.2 }}>{title}</span>
+      <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: -0.2, color: 'var(--text-primary)' }}>{title}</span>
     </div>
   );
 }
@@ -89,7 +89,7 @@ function ProfileTab({ onOpenPassport, onOpenCommunity, onOpenReports }) {
 function BottomNav({ tab, onTab, onSos }) {
   const items = [['home', 'Home', 'home'], ['grid_view', 'Modules', 'modules'], null, ['calendar_today', 'Appts', 'appts'], ['person', 'Profile', 'profile']];
   return (
-    <div style={{ display: 'flex', alignItems: 'center', height: 60, background: '#fff', borderTop: '1px solid var(--border)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', height: 60, background: 'rgba(19,19,19,0.90)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderTop: '1px solid var(--border)' }}>
       {items.map((it, i) => {
         if (!it) {
           return (
@@ -118,7 +118,7 @@ export function PatientApp() {
 
   if (!authed) {
     return (
-      <div style={{ minHeight: '100vh', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
         <IOSDevice>
           <LoginScreen onLogin={() => setAuthed(true)} />
         </IOSDevice>
@@ -139,14 +139,14 @@ export function PatientApp() {
   else if (tab === 'profile') body = <ProfileTab onOpenPassport={() => setPush('passport')} onOpenCommunity={() => setPush('community')} onOpenReports={() => setPush('reports')} />;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)' }}>
       <IOSDevice>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
           <div style={{ height: 50, flexShrink: 0 }} />
           {topBar}
-          <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: '#fff' }}>{body}</div>
+          <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: 'var(--bg)' }}>{body}</div>
           {showNav && <BottomNav tab={tab} onTab={setTab} onSos={() => setPush('sos')} />}
-          <div style={{ height: 20, flexShrink: 0, background: '#fff' }} />
+          <div style={{ height: 20, flexShrink: 0, background: 'rgba(19,19,19,0.90)' }} />
         </div>
       </IOSDevice>
     </div>

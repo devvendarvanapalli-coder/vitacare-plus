@@ -9,7 +9,7 @@ export function MetricCard({ label, value, unit, icon, iconColor, delta, deltaLa
       onClick={onClick}
       style={{
         width: 130, flexShrink: 0, padding: 14, borderRadius: 12,
-        border: '1px solid var(--border)', background: '#fff',
+        border: '1px solid var(--border)', background: 'var(--card)',
         cursor: onClick ? 'pointer' : 'default',
       }}
     >

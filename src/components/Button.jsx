@@ -12,10 +12,10 @@ export function Button({ children, variant = 'primary', size = 'md', fullWidth, 
 
   const fills = {
     // Flat fills — no gradients, minimal shadows
-    primary:  { background: 'var(--primary)',   color: '#fff',              boxShadow: 'none' },
-    secondary:{ background: 'var(--secondary)', color: '#fff',              boxShadow: 'none' },
-    danger:   { background: 'var(--error)',      color: '#fff',              boxShadow: 'none' },
-    outlined: { background: 'transparent',       color: 'var(--primary)',    border: '1px solid var(--primary)' },
+    primary:  { background: 'var(--primary)',   color: 'var(--on-primary)', boxShadow: 'none' },
+    secondary:{ background: 'var(--surface-high)', color: 'var(--text-primary)', boxShadow: 'none' },
+    danger:   { background: 'var(--error)',      color: '#130000',           boxShadow: 'none' },
+    outlined: { background: 'transparent',       color: 'var(--primary)',    border: '1px solid var(--border)' },
     ghost:    { background: 'transparent',       color: 'var(--text-secondary)', border: '1px solid var(--border)' },
   }[variant];
 

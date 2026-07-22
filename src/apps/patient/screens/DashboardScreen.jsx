@@ -39,7 +39,7 @@ export function DashboardScreen({ onOpenMembership, onOpenAppointments, onOpenMo
   const m = member.metrics;
 
   return (
-    <div style={{ paddingBottom: 32, background: '#fff' }}>
+    <div style={{ paddingBottom: 32, background: 'var(--bg)' }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', padding: '16px 20px 12px' }}>
         <div style={{ flex: 1 }}>
